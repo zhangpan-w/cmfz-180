@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.dao.BannerDao">
+    <insert id="insert">
+        insert into banner values(#{id},#{title},#{img},#{create_date},#{status},#{other})
+    </insert>
+
+    <delete id="delete">
+        delete from banner where id in
+          <foreach collection="array" open="(" index="0" item="id" separator="," close=")">
+              #{id}
+          </foreach>
+    </delete>
+
+    <update id="update">
+        update banner
+        <set>
+            <if test="title!=null">
+                title=#{title},
+            </if>
+            <if test="img!=null">
+                img=#{img},
+            </if>
+            <if test="create_date!=null">
+                create_date=#{create_date},
+            </if>
+            <if test="status!=null">
+                status=#{status},
+            </if>
+            <if test="other!=null">
+                other=#{other},
+            </if>
+        </set>
+        where id=#{id}
+    </update>
+
+    <select id="select" resultType="Banner">
+        select id,title,img,create_date,status,other
+        from banner limit #{start},#{rows}
+    </select>
+
+    <select id="selectzs" resultType="Banner">
+        select id,title,img,create_date
+        from banner where status="展示"
+    </select>
+
+    <select id="selectAll" resultType="Banner">
+        select id,title,img,create_date,status
+        from banner
+    </select>
+
+    <select id="selectCount" resultType="int">
+        select count(id) from banner
+    </select>
+</mapper>

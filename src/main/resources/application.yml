@@ -1,0 +1,28 @@
+server:
+  port: 80
+  servlet:
+    context-path: /cmfz
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url:  jdbc:mysql://localhost:3306/cmfz?serverTimezone=UTC
+    username: root
+    password: root
+  http:
+    encoding:
+      charset: UTF-8
+      force: true
+      force-request: true
+      force-response: true
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 1000MB
+  mvc:
+    date-format: yyyy-MM-dd
+  jackson:
+    date-format: yyyy-MM-dd
+mybatis:
+  mapper-locations: classpath:Mapper/*Mapper.xml
+  type-aliases-package: com.baizhi.entity

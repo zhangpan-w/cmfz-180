@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.dao.ArticleDao">
+
+    <insert id="insert">
+        insert into article values(#{id},#{title},#{author},#{content},#{guru_id},#{create_date},#{status},#{types})
+    </insert>
+
+    <delete id="delete">
+        delete from article where id in
+        <foreach collection="array" open="(" index="0" item="id" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <update id="update">
+        update article
+        <set>
+            <if test="title!=null">
+                title=#{title},
+            </if>
+            <if test="author!=null">
+                author=#{author},
+            </if>
+            <if test="content!=null">
+                content =#{content},
+            </if>
+            <if test="guru_id!=null">
+                guru_id=#{guru_id},
+            </if>
+            <if test="create_date!=null">
+                create_date=#{create_date},
+            </if>
+            <if test="status!=null">
+                status=#{status},
+            </if>
+            <if test="types!=null">
+                types=#{types},
+            </if>
+        </set>
+        where id=#{id}
+    </update>
+
+    <select id="select" resultType="Article">
+        select id,title,author,content,guru_id,create_date,status,types
+            from article limit #{start},#{rows}
+    </select>
+
+    <select id="selectAll" resultType="Article">
+        select id,title,author,content,guru_id,create_date,status,types
+            from article
+    </select>
+
+    <select id="selectContent" resultType="Article">
+        select id,title,author,content,guru_id,create_date,status,types
+            from article where id=#{id}
+    </select>
+
+    <select id="selectCount" resultType="int">
+        select count(id) from article
+    </select>
+</mapper>

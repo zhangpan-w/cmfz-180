@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.dao.AlbumDao">
+
+    <insert id="insert">
+        insert into album values(#{id},#{title},#{img},#{score},#{author},#{broadcaster},#{counts},#{brief},#{create_date},#{status},#{types})
+    </insert>
+
+    <delete id="delete">
+      delete from album where id in
+      <foreach collection="array" open="(" index="0" item="id" separator="," close=")">
+          #{id}
+      </foreach>
+    </delete>
+
+    <update id="update">
+        update album
+        <set>
+            <if test="title!=null">
+                title=#{title},
+            </if>
+            <if test="img!=null">
+                img=#{img},
+            </if>
+            <if test="score!=null">
+                score=#{score},
+            </if>
+            <if test="author!=null">
+                author=#{author},
+            </if>
+            <if test="broadcaster!=null">
+                broadcaster=#{broadcaster},
+            </if>
+            <if test="counts!=null">
+                counts=#{counts},
+            </if>
+            <if test="brief!=null">
+                brief=#{brief},
+            </if>
+            <if test="create_date!=null">
+                create_date=#{create_date},
+            </if>
+            <if test="status!=null">
+                status=#{status},
+            </if>
+            <if test="types!=null">
+                types=#{types},
+            </if>
+        </set>
+        where id=#{id}
+    </update>
+
+    <select id="select" resultType="Album">
+        select id,title,img,score,author,broadcaster,counts,brief,create_date,status,types
+        from album limit #{start},#{rows}
+    </select>
+
+    <select id="selectAll" resultType="Album">
+        select id,title,img,score,author,broadcaster,counts,brief,create_date,status,types
+        from album
+    </select>
+
+    <select id="selectById" resultType="Album">
+        select id,title,img,score,author,broadcaster,counts,brief,create_date,status,types
+        from album where id=#{id}
+    </select>
+
+    <select id="selectCount" resultType="int">
+        select count(id) from album
+    </select>
+</mapper>
